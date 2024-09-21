@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  nextjs:
+    build: ./frontend
+    restart: always
+    links:
+      - postgres
+    volumes:
+      - ./frontend:/home/node/app
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      - flask
+      - postgres
+    networks:
+      - my_network
+
+  flask:
+    build: ./backend
+    restart: always
+    volumes:
+      - ./backend:/home/python3/app
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      - postgres
+    networks:
+      - my_network
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - my_network
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - nextjs
+      - flask
+    networks:
+      - my_network
+
+
+volumes:
+  postgres_data:
+
+networks:
+  my_network:
+    driver: bridge

@@ -1,0 +1,16 @@
+flask[async]
+flask_cors
+requests
+bilibili-api-python
+psycopg2
+schedule
+flask-sqlalchemy
+configparser
+python-dotenv
+pandas
+openpyxl
+scikit-learn
+asyncio
+aiofiles
+snownlp
+imageio

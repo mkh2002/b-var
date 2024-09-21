@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body .apexcharts-tooltip.apexcharts-theme-light {
+  @apply bg-default-100/50 backdrop-blur-md shadow-none px-6 py-4 rounded-md border-none;
+}
+
+.apexcharts-tooltip-title,
+.apexcharts-zaxistooltip-bottom.apexcharts-theme-light {
+  @apply hidden;
+}
+
+.apexcharts-xaxistooltip {
+  @apply hidden;
+}
+.apexcharts-dataLabels {
+  @apply hidden text-default-500;
+}
+
+#card {
+  position: absolute;
+  z-index: 0;
+  top: 15%;
+  left: 12px;
+  height: 70%;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0% 0%,
+    blue 2px 2px,
+    transparent 2px 16.07%
+  );
+}
+
+#card::after {
+  content: "";
+  position: inherit;
+  z-index: -1;
+  top: 0;
+  bottom: inherit;
+  height: 100%;
+  width: inherit;
+  @apply bg-gradient-to-t from-default-50 via-default-50/90 to-default-50;
+}
